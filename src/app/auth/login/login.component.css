@@ -1,0 +1,29 @@
+
+.img{
+  border-radius:5px;
+  border: 1px solid #999;
+  background-repeat:no-repeat;
+  background:url(../../../assets/img/open.jpg);
+  background-size: cover;
+  }
+.img img{
+  width: 100%;
+}
+@media all and (min-width: 500px) and (max-width: 1000px)
+{
+.img{
+  border-radius:5px;
+  border: 1px solid #999;
+  padding:13px;
+  width:300px;
+  height:300px;
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
+  background:url(../../../assets/img/open.jpg);
+  background-size: cover;
+
+  }
+}
+.img img{
+   width:100%;
+}

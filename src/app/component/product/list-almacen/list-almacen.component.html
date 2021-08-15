@@ -1,0 +1,137 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"><i class="fas fa-stream mr-1"></i>Listado de Productos Almacén</h3>
+    <button *ngIf="helpService.isInRole('Administrador')" class="btn btn-primary" style="float: right;"
+      [routerLink]="['/product/']"><i class="nav-icon fas fa-plus mr-1"></i>Añadir Producto</button>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <div *ngIf="products.length < 1">
+      No hay Productos que mostrar.
+    </div>
+    <table id="example1" class="table table-bordered table-striped" *ngIf="products.length > 0">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Precio / <span data-toggle="tooltip" style='font-size:15px;' title="Producto en promoción."
+              class="badge badge-primary">Promoción</span>
+          </th>
+          <th>Peso</th>
+          <th>Categoría</th>
+          <th>SubCategoría</th>
+          <th>Cantidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of products">
+          <td>
+            <a [ngbPopover]=imagen popoverTitle={{item.name}}><strong>{{item.name}}</strong></a>
+            <ng-template #imagen>
+              <img [src]="'http://localhost:3000/' + item.picture" width="100%" height="100%" alt="">
+            </ng-template>
+          </td>
+          <td>{{item.code}}</td>
+          <td>{{item.description}}</td>
+          <td>
+            {{item.price}}
+            <span *ngIf="item.promotion > 0">/ </span>
+            <span *ngIf="item.promotion > 0" data-toggle="tooltip" style='font-size:15px;'
+              title="Producto en promoción." class="badge badge-primary">{{item.promotion}}</span>
+
+          </td>
+          <td>{{item.weigth}}</td>
+          <td>{{item.kind}}</td>
+          <td>{{item.subCategory}}</td>
+          <td>{{item.storeAvailability}}</td>
+          <td style="width: 150px;">
+            <span *ngIf="item.storeActive" data-toggle="tooltip" style='font-size:15px; cursor: pointer;'
+              title="Producto disponible" (click)="checkbox.click(); desactivarProd(item)"
+              class="badge badge-primary">Activo</span>
+            <span *ngIf="!item.storeActive" data-toggle="tooltip" style='font-size:15px; cursor: pointer;'
+              title="Producto no disponible" (click)="checkbox.click(); activarProd(item)"
+              class="badge badge-danger">Inactivo</span>
+            <input class="checkbox d-none" #checkbox type="checkbox" [(ngModel)]=item.storeActive>
+            <i class="fas fa-hand-holding-usd ml-2" title="Promoción" (click)="modal.click(); selectProduct(item)"
+              style='font-size:24px; cursor: pointer;'></i>
+
+            <button type="button" class="btn btn-primary" hidden #modal data-toggle="modal"
+              data-target="#myModal"></button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Nombre</th>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Precio / <span data-toggle="tooltip" style='font-size:15px;' title="Producto en promoción."
+              class="badge badge-primary">Promoción</span>
+          </th>
+          <th>Peso</th>
+          <th>Categoría</th>
+          <th>SubCategoría</th>
+          <th>Cantidad</th>
+          <th>Acciones</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="card-footer" *ngIf="products.length > 0">
+
+    <ul class="pagination pagination-md" style="float: right;">
+      <li class="page-item"><a (click)="getProducts(1)" class="page-link">&laquo;</a></li>
+      <li *ngIf="currentPage > 3" class="page-item"><a class="page-link">...</a></li>
+      <li *ngIf="currentPage > 2" (click)="getProducts(beforepage-1)" class="page-item"><a
+          class="page-link">{{beforepage-1}}</a></li>
+      <li *ngIf="currentPage > 1" (click)="getProducts(beforepage)" class="page-item"><a
+          class="page-link">{{beforepage}}</a></li>
+      <li class="page-item active"><a class="page-link">{{currentPage}}</a></li>
+
+      <li *ngIf="currentPage < pages" (click)="getProducts(nextpage)" class="page-item"><a
+          class="page-link">{{nextpage}}</a></li>
+      <li *ngIf="currentPage < pages-1" (click)="getProducts(nextpage+1)" class="page-item"><a
+          class="page-link">{{nextpage+1}}</a></li>
+      <li *ngIf="currentPage < pages-2" class="page-item"><a class="page-link">...</a></li>
+      <li class="page-item"><a (click)="getProducts(pages)" class="page-link">&raquo;</a></li>
+    </ul>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Crear Promoción</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Crear Promoción para el producto: <strong>{{productService.selectedProduct.name}}</strong>
+        <input type="number" class="form-control form-control-user" placeholder="Peso" name="promotion" id="promotion"
+          required [(ngModel)]="prom" #promotion="ngModel">
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="Promocion()" data-dismiss="modal">
+          <div *ngIf="crearPromotion()">Crear</div>
+          <div *ngIf="!crearPromotion()">Actualizar</div>
+        </button>
+        <button *ngIf="!crearPromotion()" type="button" class="btn btn-warning" (click)="Promocion(0)"
+          data-dismiss="modal">Eliminar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

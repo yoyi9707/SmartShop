@@ -1,0 +1,306 @@
+<!-- CARROUSEL -->
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../../../assets/img/photo1.png" alt="Los Angeles">
+    </div>
+    <div class="carousel-item">
+      <img src="../../../assets/img/photo2.png" alt="Chicago">
+    </div>
+    <div class="carousel-item">
+      <img src="../../../assets/img/photo3.jpg" alt="New York">
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+
+</div>
+<!--  -->
+
+<!-- Small boxes (Stat box) -->
+<div class="row pt-4">
+  <div class="col-lg-3 col-6">
+    <!-- small box -->
+    <div class="small-box bg-info" (click)="showProductByCat('Ropa')" style="cursor: pointer;">
+      <div class="inner">
+        <h3>{{cantRopa}}</h3>
+
+        <p>Ropa</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-tshirt"></i>
+      </div>
+      <a class="small-box-footer">Ver <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+  <!-- ./col -->
+  <div class="col-lg-3 col-6">
+    <!-- small box -->
+    <div class="small-box bg-success" (click)="showProductByCat('Muebles')" style="cursor: pointer;">
+      <div class="inner">
+        <h3>{{cantMuebles}}</h3>
+
+        <p>Muebles</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-couch"></i>
+      </div>
+      <a class="small-box-footer">Ver <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+  <!-- ./col -->
+  <div class="col-lg-3 col-6">
+    <!-- small box -->
+    <div class="small-box bg-warning" (click)="showProductByCat('Tecnología')" style="cursor: pointer;">
+      <div class="inner">
+        <h3>{{cantTecnolo}}</h3>
+
+        <p>Tecnología</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-tv"></i>
+      </div>
+      <a class="small-box-footer">Ver <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+  <!-- ./col -->
+  <div class="col-lg-3 col-6">
+    <!-- small box -->
+    <div class="small-box bg-danger" (click)="showProductByCat('Comida')" style="cursor: pointer;">
+      <div class="inner">
+        <h3>{{cantComida}}</h3>
+
+        <p>Comida</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-pizza-slice"></i>
+      </div>
+      <a class="small-box-footer">Ver <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+  <!-- ./col -->
+</div>
+<!-- /.row -->
+<!-- Main row -->
+<div class="row">
+  <!-- Left col -->
+  <section class="col-lg-12">
+    <!-- Custom tabs (Charts with tabs)-->
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">
+          <i class="fas fa-bullhorn"></i>
+          {{DealsNewV}}
+        </h4>
+        <div class="card-tools">
+          <ul class="nav nav-pills ml-auto">
+            <li class="nav-item">
+              <a class="nav-link active" (click)="DealsNew('Promociones del día')" href="#revenue-chart1"
+                data-toggle="tab">Promoción</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#sales-chart2" (click)="DealsNew('Nuevos en la tienda')"
+                data-toggle="tab">Nuevo</a>
+            </li>
+          </ul>
+        </div>
+      </div><!-- /.card-header -->
+      <div class="card-body">
+        <div class="tab-content p-0">
+          <!-- Morris chart - Sales -->
+          <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: auto;">
+            <div *ngIf="!showProducts[0][0]._id">
+              No hay productos en promoción en este momento.
+            </div>
+            <div class="row" *ngIf="showProducts[0][0]._id">
+              <section *ngFor="let items of showProducts" class="col-lg-4 connectedSortable">
+                <div *ngFor="let item of items" class="card direct-chat direct-chat-primary">
+                  <div class="card-header">
+                    <h5 class="card-title">{{item.name}}</h5>
+
+                    <div class="card-tools">
+                      <span style='font-size:15px;' class="badge badge-primary"
+                        ngbPopover="Disponible en el Almacén">{{item.storeAvailability}}</span>
+
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Details"
+                        data-widget="chat-pane-toggle" ngbPopover="Detalles">
+                        <i class="fas fa-book"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <!-- BODY here -->
+                    <img *ngIf="item.picture" [src]="'http://localhost:3000/' + item.picture" width="100%"
+                      height="250px" alt="">
+                    <!--/.BODY-->
+
+                    <!-- Second BODY here -->
+                    <div class="direct-chat-contacts p-3">
+                      <h3>Detalles del Producto:</h3>
+                      <p><strong>Descripción:</strong> {{item.description}}</p>
+                      <p><strong>Categoría:</strong> {{item.kind}}</p>
+                      <p><strong>SubCategoría:</strong> {{item.subCategory}}</p>
+                      <p><strong>Peso:</strong> {{item.weigth}}</p>
+                      <!-- /.contacts-list -->
+                    </div>
+                    <!-- /.Second BODY -->
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+                    <form (submit)="submit(cantidad, item)">
+                      <div class="row">
+                        <div class="col-7">
+                          <h5 *ngIf="!item.promotion > 0"><strong>Precio: ${{item.price}}</strong></h5>
+                          <h5 *ngIf="item.promotion > 0"><strong>Precio:<del> ${{item.price}}</del> <span
+                                data-toggle="tooltip"
+                                class="badge badge-danger ml-1">${{item.promotion}}</span></strong>
+                          </h5>
+                        </div>
+                        <div class="input-group col-5 price">
+                          <input type="number" name="cant" placeholder="0" #cantidad style="height: 40px;"
+                            class="form-control">
+                          <span class="input-group-append">
+                            <button type="submit" class="btn btn-primary" style="height: 40px;">Añadir</button>
+                          </span>
+                        </div>
+                        <!-- <button type="button" class="btn btn-primary" style="align-items: right;">Add to Car</button> -->
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.card-footer-->
+                </div>
+              </section>
+            </div>
+          </div>
+          <div class="chart tab-pane" id="sales-chart2" style="position: relative; height: auto;">
+            <div *ngIf="!showProducts[0][0]._id">
+              No hay productos nuevos en la Tienda.
+            </div>
+            <div class="row" *ngIf="showProducts[0][0]._id">
+              <section *ngFor="let items of showProductsNew" class="col-lg-4 connectedSortable">
+                <div *ngFor="let item of items" class="card direct-chat direct-chat-primary">
+                  <div class="card-header">
+                    <h5 class="card-title">{{item.name}}</h5>
+
+                    <div class="card-tools">
+                      <span style='font-size:15px;' class="badge badge-primary"
+                      ngbPopover="Disponible en el Almacén">{{item.storeAvailability}}</span>
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Details"
+                        data-widget="chat-pane-toggle" ngbPopover="Detalles">
+                        <i class="fas fa-book"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <!-- BODY here -->
+                    <img *ngIf="item.picture" [src]="'http://localhost:3000/' + item.picture" width="100%"
+                      height="250px" alt="">
+                    <!--/.BODY-->
+
+                    <!-- Second BODY here -->
+                    <div class="direct-chat-contacts p-3">
+                      <h3>Detalles del Producto:</h3>
+                      <p><strong>Descripción:</strong> {{item.description}}</p>
+                      <p><strong>Categoría:</strong> {{item.kind}}</p>
+                      <p><strong>SubCategoría:</strong> {{item.subCategory}}</p>
+                      <p><strong>Peso:</strong> {{item.weigth}}</p>
+                      <!-- /.contacts-list -->
+                    </div>
+                    <!-- /.Second BODY -->
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+                    <form (submit)="submit(cantidad, item)">
+                      <div class="row">
+                        <div class="col-7">
+                          <h5 *ngIf="!item.promotion > 0"><strong>Precio: ${{item.price}}</strong></h5>
+                          <h5 *ngIf="item.promotion > 0"><strong>Precio:<del> ${{item.price}}</del> <span
+                                data-toggle="tooltip"
+                                class="badge badge-danger ml-1">${{item.promotion}}</span></strong>
+                          </h5>
+                        </div>
+                        <div class="input-group col-5 price">
+                          <input type="number" name="cant" placeholder="0" #cantidad style="height: 40px;"
+                            class="form-control">
+                          <span class="input-group-append">
+                            <button type="submit" class="btn btn-primary" style="height: 40px;">Añadir</button>
+                          </span>
+                        </div>
+                        <!-- <button type="button" class="btn btn-primary" style="align-items: right;">Add to Car</button> -->
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.card-footer-->
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.card-body -->
+      <div class="card-footer" *ngIf="showProducts[0][0]._id">
+        <!-- PromotionPagination -->
+        <ul *ngIf="DealsNewV == 'Promociones del día'" class="pagination pagination-md" style="float: right;">
+          <li class="page-item"><a (click)="getProducts(1)" class="page-link">&laquo;</a></li>
+          <li *ngIf="currentPage > 3" class="page-item"><a class="page-link">...</a></li>
+          <li *ngIf="currentPage > 2" (click)="getProducts(beforepage-1)" class="page-item"><a
+              class="page-link">{{beforepage-1}}</a></li>
+          <li *ngIf="currentPage > 1" (click)="getProducts(beforepage)" class="page-item"><a
+              class="page-link">{{beforepage}}</a></li>
+          <li class="page-item active"><a class="page-link">{{currentPage}}</a></li>
+
+          <li *ngIf="currentPage < pages" (click)="getProducts(nextpage)" class="page-item"><a
+              class="page-link">{{nextpage}}</a></li>
+          <li *ngIf="currentPage < pages-1" (click)="getProducts(nextpage+1)" class="page-item"><a
+              class="page-link">{{nextpage+1}}</a></li>
+          <li *ngIf="currentPage < pages-2" class="page-item"><a class="page-link">...</a></li>
+          <li class="page-item"><a (click)="getProducts(pages)" class="page-link">&raquo;</a></li>
+        </ul>
+        <!-- NewPagination -->
+        <ul *ngIf="DealsNewV != 'Promociones del día'" class="pagination pagination-md" style="float: right;">
+          <li class="page-item"><a (click)="getProductsNew(1)" class="page-link">&laquo;</a></li>
+          <li *ngIf="currentPageNew > 3" class="page-item"><a class="page-link">...</a></li>
+          <li *ngIf="currentPageNew > 2" (click)="getProductsNew(beforepageNew-1)" class="page-item"><a
+              class="page-link">{{beforepage-1}}</a></li>
+          <li *ngIf="currentPageNew > 1" (click)="getProductsNew(beforepageNew)" class="page-item"><a
+              class="page-link">{{beforepageNew}}</a></li>
+          <li class="page-item active"><a class="page-link">{{currentPageNew}}</a></li>
+
+          <li *ngIf="currentPageNew < pagesNew" (click)="getProductsNew(nextpageNew)" class="page-item"><a
+              class="page-link">{{nextpageNew}}</a></li>
+          <li *ngIf="currentPageNew < pagesNew-1" (click)="getProductsNew(nextpageNew+1)" class="page-item"><a
+              class="page-link">{{nextpageNew+1}}</a></li>
+          <li *ngIf="currentPageNew < pagesNew-2" class="page-item"><a class="page-link">...</a></li>
+          <li class="page-item"><a (click)="getProductsNew(pagesNew)" class="page-link">&raquo;</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- /.card -->
+  </section>
+</div>

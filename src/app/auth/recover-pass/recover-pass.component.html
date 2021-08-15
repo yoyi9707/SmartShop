@@ -1,0 +1,79 @@
+<div class="container">
+
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+
+    <div class="col-xl-10 col-lg-12 col-md-9">
+
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <div class="col-lg-6 d-none d-lg-block">
+              <div *ngIf="!codeValid">
+                  <div class="text-center p-5">
+                    <h1 class="h4 text-gray-900 pt-4">Se ha enviado un código de recuperación a su correo.</h1>
+                  </div>
+              </div>
+              <div *ngIf="codeValid">
+                <div class="text-center p-5">
+                  <h1 class="h4 text-gray-900 pt-4">Código Aceptado. Introduzca una nueva contraseña.</h1>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-lg-6">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Recuperar contraseña!</h1>
+                </div>
+
+                <div *ngIf="!codeValid">
+                  <div class="form-group">
+                    <input type="number" class="form-control form-control-user" placeholder="Código" name="code" id="code"
+                      required #code>
+                      <a *ngIf="InvCode" style="color: red; margin-left: 2%;">Código incorrecto.</a>
+                  </div>
+
+                  <button (click)="verify(code)" class="btn btn-primary btn-user btn-block">
+                    Enviar código
+                  </button>
+                </div>
+
+                <form *ngIf="codeValid" #form="ngForm" (ngSubmit)="NewPass(form)" class="user">
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input type="password" class="form-control form-control-user" placeholder="Repeat Password"
+                        name="secondLastname" id="secondLastname" required minlength="8"
+                        [(ngModel)]="authService.logedUser.secondLastname" #passwordC="ngModel">
+                      <app-ayuda *ngIf="passwordC.invalid && passwordC.touched" [errors]="passwordC.errors"></app-ayuda>
+                    </div>
+                    <div class="col-sm-6">
+                      <input type="password" class="form-control form-control-user" placeholder="Repeat Password"
+                        name="password" id="password" required minlength="8"
+                        [(ngModel)]="authService.logedUser.password" #password="ngModel">
+                      <app-ayuda *ngIf="password.invalid && password.touched" [errors]="password.errors"></app-ayuda>
+                    </div>
+                    <a *ngIf="badpass" style="color: red; margin-left: 2%;">Las contraseñas no coinciden.</a>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-user btn-block">
+                    Actualizar Contraseña
+                  </button>
+                </form>
+                <hr>
+                <div style="cursor: pointer;" class="text-center">
+                  <a class="small" [routerLink]="['/auth','login']">Volver a Iniciar Sesión!</a>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

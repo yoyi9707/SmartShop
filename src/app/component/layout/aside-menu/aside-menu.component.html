@@ -1,0 +1,161 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4 position-fixed">
+
+  <!-- Brand Logo -->
+  <a class="brand-link">
+    <img src="../../../../assets/img/AdminLTELogo.jpg" alt="Logo" class="brand-image img-circle"
+      style="opacity: .8;">
+    <span class="brand-text font-weight-light">SmartShop</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        <li class="nav-header">PRODUCTOS</li>
+
+        <li class="nav-item has-treeview">
+          <a class="nav-link">
+            <i class="nav-icon fas fa-tshirt"></i>
+            <p>
+              Ropa
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li *ngFor="let item of Ropa" class="nav-item" (click)="showProductBySubCat(item.name)">
+              <a class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>{{item.name}}</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+          <a class="nav-link">
+            <i class="nav-icon fas fa-couch"></i>
+            <p>
+              Muebles
+              <i class="fas fa-angle-left right"></i>
+              <!-- <span class="badge badge-info right">6</span> -->
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li *ngFor="let item of Mueble" class="nav-item" (click)="showProductBySubCat(item.name)">
+              <a class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>{{item.name}}</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview" >
+          <a class="nav-link">
+            <i class="nav-icon fas fa-tv"></i>
+            <p>
+              Tecnología
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li *ngFor="let item of Tecnologia" class="nav-item" (click)="showProductBySubCat(item.name)">
+              <a class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>{{item.name}}</p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a class="nav-link">
+            <i class="nav-icon fas fa-pizza-slice"></i>
+            <p>
+              Comida
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li *ngFor="let item of Comida" class="nav-item" (click)="showProductBySubCat(item.name)">
+              <a class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>{{item.name}}</p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
+        <li *ngIf="helpService.isInRole('Administrador') || helpService.isInRole('Proveedor')" class="nav-header">PROVEEDOR</li>
+        <li *ngIf="helpService.isInRole('Proveedor')" class="nav-item" [routerLink]="['/product/create']">
+          <a class="nav-link">
+            <i class="nav-icon fas fa-plus"></i>
+            <p>Nuevo producto</p>
+          </a>
+        </li>
+        <li *ngIf="helpService.isInRole('Administrador') || helpService.isInRole('Proveedor')" class="nav-item" [routerLink]="['/product/']">
+          <a class="nav-link">
+            <i class="nav-icon fas fa-stream"></i>
+            <p>Listado de productos</p>
+          </a>
+        </li>
+
+        <li *ngIf="helpService.isInRole('Administrador') || helpService.isInRole('Proveedor')" class="nav-header">ADMINISTRACIÓN</li>
+        <li *ngIf="helpService.isInRole('Administrador')" class="nav-item">
+          <a class="nav-link">
+            <i class="nav-icon fas fa-chart-line" style="font-size: 20px;"></i>
+            <p>
+              Reportes
+              <!-- <span class="badge badge-info right">2</span> -->
+            </p>
+          </a>
+        </li>
+        <li *ngIf="helpService.isInRole('Administrador')" class="nav-item">
+          <a [routerLink]="['/user']" class="nav-link">
+            <i class="nav-icon fas fa-users" style="font-size: 20px;"></i>
+            <p>Usuarios</p>
+          </a>
+        </li>
+        <li *ngIf="helpService.isInRole('Administrador')" class="nav-item">
+          <a [routerLink]="['/user/role']" class="nav-link">
+            <i class="nav-icon fas fa-user-edit" style="font-size: 20px;"></i>
+            <p>Roles</p>
+          </a>
+        </li>
+        <li *ngIf="helpService.isInRole('Administrador') || helpService.isInRole('Proveedor')" class="nav-item" [routerLink]="['/nomenclator/list']">
+          <a  class="nav-link">
+            <i class="nav-icon fas fa-sitemap" style="font-size: 20px;"></i>
+            <p>Nomencladores</p>
+          </a>
+        </li>
+
+        <li *ngIf="helpService.isInRole('Administrador')" class="nav-item" [routerLink]="['/product/almacen']">
+          <a  class="nav-link">
+            <i class="nav-icon fas fa-dolly" style="font-size: 25px;"></i>
+            <p>Almacen</p>
+          </a>
+        </li>
+
+        <li class="nav-header">INFORMACIÓN</li>
+        <li class="nav-item">
+          <a href="https://adminlte.io/docs/3.0" class="nav-link">
+            <i class="nav-icon far fa-id-badge" style="font-size: 25px;"></i>
+            <p>Contacto</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">
+            <i class="nav-icon  	fas fa-user-friends"></i>
+            <p>Sobre Nosotros</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

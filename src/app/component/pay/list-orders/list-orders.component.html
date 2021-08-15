@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"><i class="fas fa-stream mr-1"></i>Listado de Órdenes</h3>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <div *ngIf="solds.length == 0">
+      No hay elementos que mostrar.
+    </div>
+    <div class="div" *ngIf="solds.length > 0">
+      <table id="example1" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>No. Factura</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of solds">
+            <td>{{item.year}}-{{item.order}}</td>
+            <td>{{item.condition}}</td>
+            <td>{{item.createdAt.toString().substring(0, 10)}}</td>
+            <td><a ngbPopover="Ver Factura" (click)="seePayment(item)" style="cursor: pointer;"><i
+                  class="fas fa-eye"></i></a></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>No. Factura</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer" *ngIf="solds.length > 0">
+
+    <ul class="pagination pagination-md" style="float: right;">
+      <li class="page-item"><a (click)="getProducts(1)" class="page-link">&laquo;</a></li>
+      <li *ngIf="currentPage > 3" class="page-item"><a class="page-link">...</a></li>
+      <li *ngIf="currentPage > 2" (click)="getProducts(beforepage-1)" class="page-item"><a
+          class="page-link">{{beforepage-1}}</a></li>
+      <li *ngIf="currentPage > 1" (click)="getProducts(beforepage)" class="page-item"><a
+          class="page-link">{{beforepage}}</a></li>
+      <li class="page-item active"><a class="page-link">{{currentPage}}</a></li>
+
+      <li *ngIf="currentPage < pages" (click)="getProducts(nextpage)" class="page-item"><a
+          class="page-link">{{nextpage}}</a></li>
+      <li *ngIf="currentPage < pages-1" (click)="getProducts(nextpage+1)" class="page-item"><a
+          class="page-link">{{nextpage+1}}</a></li>
+      <li *ngIf="currentPage < pages-2" class="page-item"><a class="page-link">...</a></li>
+      <li class="page-item"><a (click)="getProducts(pages)" class="page-link">&raquo;</a></li>
+    </ul>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->

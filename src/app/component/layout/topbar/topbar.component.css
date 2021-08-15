@@ -1,0 +1,28 @@
+i {
+  font-size: 30px;
+}
+
+.buscar {
+  font-size: 21px !important;
+}
+
+.badge {
+  font-size: 15px;
+}
+
+.active {
+  text-decoration-style: solid;
+}
+
+.nav-link{
+  cursor: pointer;
+}
+
+/* .dropdown-footer{
+  border-radius: 5% !important; */
+  /* border-radius: 25% !important; */
+/* } */
+
+/* .dropdown-menu{
+  border-radius: 5%;
+} */

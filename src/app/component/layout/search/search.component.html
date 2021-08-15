@@ -1,0 +1,107 @@
+<section class="col-lg-12">
+  <!-- Custom tabs (Charts with tabs)-->
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">
+        <i class="fas fa-search mr-1"></i>
+        Resultados de la búsqueda: {{helpService.search}}
+      </h4>
+    </div><!-- /.card-header -->
+    <div class="card-body">
+      <div class="tab-content p-0">
+        <!-- Morris chart - Sales -->
+        <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: auto;">
+          <div *ngIf="!helpService.showProductsSearch[0][0]._id">
+            No hay elementos para mostrar.
+          </div>
+          <div class="row" *ngIf="helpService.showProductsSearch[0][0]._id">
+            <section *ngFor="let items of helpService.showProductsSearch" class="col-lg-4 connectedSortable">
+              <div *ngFor="let item of items" class="card direct-chat direct-chat-primary">
+                <div class="card-header">
+                  <h5 class="card-title" (click)="showProductBySubCat(item.subCategory)" style="cursor: pointer;">
+                    {{item.name}}</h5>
+
+                  <div class="card-tools">
+                    <span style='font-size:15px;' class="badge badge-primary"
+                        ngbPopover="Disponible en el Almacén">{{item.storeAvailability}}</span>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Details"
+                      data-widget="chat-pane-toggle" ngbPopover="Detalles">
+                      <i class="fas fa-book"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <!-- BODY here -->
+                  <img (click)="showProductBySubCat(item.subCategory)" style="cursor: pointer;"
+                    [src]="'http://localhost:3000/' + item.picture" width="100%" height="250px" alt="">
+                  <!--/.BODY-->
+
+                  <!-- Second BODY here -->
+                  <div class="direct-chat-contacts p-3">
+                    <h3>Detalles del Producto:</h3>
+                    <p><strong>Descripción:</strong> {{item.description}}</p>
+                    <p><strong>Categoría:</strong> {{item.kind}}</p>
+                    <p><strong>SubCategoría:</strong> {{item.subCategory}}</p>
+                    <p><strong>Peso:</strong> {{item.weigth}}</p>
+                    <!-- /.contacts-list -->
+                  </div>
+                  <!-- /.Second BODY -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer" *ngIf="helpService.showProductsSearch[0][0]._id">
+                  <form (submit)="submit(cantidad, item)">
+                    <div class="row">
+                      <div class="col-7">
+                        <h5 *ngIf="!item.promotion > 0"><strong>Precio: ${{item.price}}</strong></h5>
+                        <h5 *ngIf="item.promotion > 0"><strong>Precio:<del> ${{item.price}}</del> <span
+                              data-toggle="tooltip"
+                              class="badge badge-danger ml-1">${{item.promotion}}</span></strong>
+                        </h5>
+                      </div>
+                      <div class="input-group col-5 price">
+                        <input type="number" name="cant" placeholder="0" #cantidad style="height: 40px;"
+                          class="form-control">
+                        <span class="input-group-append">
+                          <button type="submit" class="btn btn-primary" style="height: 40px;">Añadir</button>
+                        </span>
+                      </div>
+                      <!-- <button type="button" class="btn btn-primary" style="align-items: right;">Add to Car</button> -->
+                    </div>
+                  </form>
+                </div>
+                <!-- /.card-footer-->
+              </div>
+            </section>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /.card-body -->
+    <div class="card-footer" *ngIf="helpService.showProductsSearch[0][0]._id">
+      <ul class="pagination pagination-md" style="float: right;">
+        <li class="page-item"><a (click)="helpService.getProductsSearch(1, helpService.search)" class="page-link">&laquo;</a></li>
+        <li *ngIf="helpService.currentPageSearch > 3" class="page-item"><a class="page-link">...</a></li>
+        <li *ngIf="helpService.currentPageSearch > 2" (click)="helpService.getProductsSearch(helpService.beforepageSearch-1, helpService.search)" class="page-item"><a
+            class="page-link">{{helpService.beforepageSearch-1}}</a></li>
+        <li *ngIf="helpService.currentPageSearch > 1" (click)="helpService.getProductsSearch(helpService.beforepageSearch, helpService.search)" class="page-item"><a
+            class="page-link">{{helpService.beforepageSearch}}</a></li>
+        <li class="page-item active"><a class="page-link">{{helpService.currentPageSearch}}</a></li>
+
+        <li *ngIf="helpService.currentPageSearch < helpService.pagesSearch" (click)="helpService.getProductsSearch(helpService.nextpageSearch, helpService.search)" class="page-item"><a
+            class="page-link">{{helpService.nextpageSearch}}</a></li>
+        <li *ngIf="helpService.currentPageSearch < helpService.pagesSearch-1" (click)="helpService.getProductsSearch(helpService.nextpageSearch + 1, helpService.search)" class="page-item"><a
+            class="page-link">{{helpService.nextpageSearch+1}}</a></li>
+        <li *ngIf="helpService.currentPageSearch < helpService.pagesSearch-2" class="page-item"><a class="page-link">...</a></li>
+        <li class="page-item"><a (click)="helpService.getProductsSearch(helpService.pagesSearch, helpService.search)" class="page-link">&raquo;</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.card -->
+
+</section>

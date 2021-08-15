@@ -1,0 +1,71 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">
+      <!-- <i class="fas fa-chart-pie mr-1"></i> -->
+      Nuevo Nomenclador
+    </h4>
+  </div><!-- /.card-header -->
+  <div class="card-body">
+    <div class="tab-content p-0">
+      <!-- Morris chart - Sales -->
+      <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: auto;">
+        <div class="row">
+          <div class="col-lg-5 d-none d-lg-block">
+            <img class="img-fluid" src="../../../../assets/img/nomen1.png" alt="">
+          </div>
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Crear Nomenclador!</h1>
+              </div>
+              <form #form="ngForm" (ngSubmit)="Add(form)" class="user">
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                   <input type="text" hidden name="_id" id="_id"
+                      [(ngModel)]="nomenclatorService.selectedNomenclator._id" #_id="ngModel">
+
+                    <input type="text" class="form-control form-control-user" placeholder="Nombre" name="name" id="name"
+                      required [(ngModel)]="nomenclatorService.selectedNomenclator.name" #name="ngModel">
+                    <app-ayuda *ngIf="name.invalid && name.touched" [errors]="name.errors"></app-ayuda>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-control-user" placeholder="Acrónimo" name="acronym"
+                      id="acronym" [(ngModel)]="nomenclatorService.selectedNomenclator.acronym"
+                      #acronym="ngModel">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <select class="custom-select" name="fathername"
+                    [(ngModel)]="nomenclatorService.selectedNomenclator.fathername" #fathername="ngModel">
+                    <option>---Nomenclador Padre---</option>
+                    <option *ngIf="nomenclatorService.selectedNomenclator.fathername">
+                        {{nomenclatorService.selectedNomenclator.fathername}}
+                      </option>
+                    <option *ngFor="let items of nomenclators" (click)="saveFather(items._id, items.order)">
+                      {{items.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <textarea type="text" class="form-control form-control-user" placeholder="Descripción"
+                    name="description" id="description"
+                    [(ngModel)]="nomenclatorService.selectedNomenclator.description" #description="ngModel"></textarea>
+                </div>
+
+                <a *ngIf="error" style="color: red;">{{error}}</a>
+                <button type="submit" [disabled]="form.invalid" class="btn btn-primary btn-user btn-block">
+                  Añadir Producto
+                </button>
+
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /.card-body -->
+      <!-- <div class="card-footer">
+
+      </div> -->
+    </div>
+  </div>
+</div>

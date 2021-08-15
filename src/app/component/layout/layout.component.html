@@ -1,0 +1,40 @@
+<!-- Icons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<!--
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script> -->
+
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <app-topbar></app-topbar>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <app-aside-menu></app-aside-menu>
+
+    <!-- BODY -->
+    <div class="content-wrapper">
+      <!-- Main content -->
+      <section class="content pt-4">
+        <div class="container-fluid pt-5">
+          <!-- notifications -->
+          <app-notifications></app-notifications>
+          <!-- Content Wrapper. Contains page content -->
+          <router-outlet></router-outlet>
+          <!-- /.content-wrapper -->
+
+        </div>
+      </section>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+  <!-- ./wrapper -->
+
+</body>

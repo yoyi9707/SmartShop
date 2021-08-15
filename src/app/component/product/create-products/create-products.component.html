@@ -1,0 +1,133 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">
+      <i class="nav-icon fas fa-plus mr-1"></i>
+      Nuevo Producto
+    </h4>
+  </div><!-- /.card-header -->
+  <div class="card-body">
+    <div class="tab-content p-0">
+      <!-- Morris chart - Sales -->
+      <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: auto;">
+        <div class="row">
+          <div class="col-lg-5 d-none d-lg-block">
+            <img *ngIf="!productService.selectedProduct.picture" class="img-fluid mt-3" style="width: 500px; height: 400px;" (click)="picture.click()"
+              [src]="photoSelected || 'assets/img/no-image.png'" alt="">
+            <img *ngIf="productService.selectedProduct.picture" class="img-fluid mt-3" style="width: 500px; height: 400px;" (click)="picture.click()"
+              [src]="photoSelected || 'http://localhost:3000/' + productService.selectedProduct.picture" alt="">
+          </div>
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Crear Producto!</h1>
+              </div>
+              <form #form="ngForm" (ngSubmit)="Add(form)" class="user">
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="text" hidden name="_id" id="_id" [(ngModel)]="productService.selectedProduct._id"
+                      #_id="ngModel">
+                    <input type="text" class="form-control form-control-user" placeholder="Nombre del producto"
+                      name="name" id="name" required [(ngModel)]="productService.selectedProduct.name" #name="ngModel">
+                    <app-ayuda *ngIf="name.invalid && name.touched" [errors]="name.errors"></app-ayuda>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-control-user" placeholder="Código" name="code" id="code"
+                      required [(ngModel)]="productService.selectedProduct.code" #code="ngModel">
+                    <app-ayuda *ngIf="code.invalid && code.touched" [errors]="code.errors"></app-ayuda>
+                  </div>
+                </div>
+
+                <div class="form-group" hidden>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" (change)="saveImg($event)" class="custom-file-input" id="exampleInputFile"
+                        placeholder="Imagen" name="picture" required #picture>
+                      <label class="custom-file-label" for="exampleInputFile">{{textoimag}}</label>
+                      <app-ayuda *ngIf="picture.invalid && picture.touched" [errors]="picture.errors"></app-ayuda>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <textarea type="text" class="form-control form-control-user" placeholder="Descripción"
+                    name="description" id="description" [(ngModel)]="productService.selectedProduct.description"
+                    #description="ngModel"></textarea>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="number" class="form-control form-control-user" placeholder="Peso" name="weigth"
+                      id="weigth" required [(ngModel)]="productService.selectedProduct.weigth" #weigth="ngModel">
+                    <app-ayuda *ngIf="weigth.invalid && weigth.touched" [errors]="weigth.errors" [tipocampo]="'numero'">
+                    </app-ayuda>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="number" class="form-control form-control-user" placeholder="Precio" name="price"
+                      id="price" required [(ngModel)]="productService.selectedProduct.price" #price="ngModel">
+                    <app-ayuda *ngIf="price.invalid && price.touched" [errors]="price.errors"></app-ayuda>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="form-group">
+                      <select class="custom-select" name="kind" [(ngModel)]="productService.selectedProduct.kind"
+                        #kind="ngModel">
+                        <option>---Categoría---</option>
+                        <option *ngIf="productService.selectedProduct._id" (click)="getSubCategories(items.name)">
+                          {{productService.selectedProduct.kind}}
+                        </option>
+                        <option *ngFor="let items of categories" (click)="getSubCategories(items.name)">{{items.name}}
+                        </option>
+                        <!-- <option *ngIf="!productService.selectedProduct._id">---Categoría---</option> -->
+                        <!-- <option *ngIf="productService.selectedProduct._id" (click)="getSubCategories(items.name)">{{productService.selectedProduct.Category}}
+                      </option>
+                      <option *ngFor="let items of subcategories" (click)="getSubCategories(items.name)">
+                        <div *ngIf="productService.selectedProduct._id else normal">
+                          <div *ngIf="productService.selectedProduct.Category != items.name">
+                            {{items.name}}
+                          </div>
+                        </div>
+                        <ng-template #normal>{{items.name}}</ng-template>
+                      </option> -->
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <select class="custom-select" name="subCategory"
+                      [(ngModel)]="productService.selectedProduct.subCategory" #subCategory="ngModel">
+                      <option>---SubCategoría---</option>
+                      <option *ngIf="productService.selectedProduct._id">{{productService.selectedProduct.subCategory}}
+                      </option>
+                      <option *ngFor="let items of subcategories">
+                        <div *ngIf="productService.selectedProduct._id else normal">
+                          <div *ngIf="productService.selectedProduct.subCategory != items.name">
+                            {{items.name}}
+                          </div>
+                        </div>
+                        <ng-template #normal>{{items.name}}</ng-template>
+                      </option>
+                    </select>
+                  </div>
+                  <!-- <a *ngIf="badpass" style="color: red; margin-left: 2%;">Las contraseñas no coinciden.</a> -->
+                </div>
+                <a *ngIf="error" style="color: red;">{{error}}</a>
+                <button type="submit" [disabled]="form.invalid" class="btn btn-primary btn-user btn-block">
+                  Añadir Producto
+                </button>
+                <!-- <hr>
+                <a href="index.html" class="btn btn-google btn-user btn-block">
+                  <i class="fab fa-google fa-fw"></i> Register with Google
+                </a>
+                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                  <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                </a> -->
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /.card-body -->
+      <!-- <div class="card-footer">
+
+      </div> -->
+    </div>
+  </div>
+</div>

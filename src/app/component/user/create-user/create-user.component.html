@@ -1,0 +1,97 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">
+      <!-- <i class="fas fa-chart-pie mr-1"></i> -->
+      Nuevo Usuario
+    </h4>
+  </div><!-- /.card-header -->
+  <div class="card-body">
+    <div class="tab-content p-0">
+      <!-- Morris chart - Sales -->
+      <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: auto;">
+        <div class="row">
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Crear Usuario!</h1>
+              </div>
+              <form #form="ngForm" (ngSubmit)="Register(form)" class="user">
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="text" hidden name="_id" id="_id" [(ngModel)]="userService.selectedUser._id"
+                      #_id="ngModel">
+                    <input type="text" class="form-control form-control-user" placeholder="Nombre" name="name"
+                      id="name" required [(ngModel)]="userService.selectedUser.name" #name="ngModel" autofocus>
+                    <app-ayuda *ngIf="name.invalid && name.touched" [errors]="name.errors"></app-ayuda>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-control-user" placeholder="Apellidos"
+                      name="firstLastname" id="firstLastname" required
+                      [(ngModel)]="userService.selectedUser.firstLastname" #firstLastname="ngModel">
+                    <app-ayuda *ngIf="firstLastname.invalid && firstLastname.touched" [errors]="firstLastname.errors">
+                    </app-ayuda>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control form-control-user" placeholder="Correo" name="email"
+                    id="email" required email [(ngModel)]="userService.selectedUser.email" #email="ngModel">
+                  <app-ayuda *ngIf="email.invalid && email.touched" [errors]="email.errors" [tipocampo]="'email'">
+                  </app-ayuda>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="number" class="form-control form-control-user" placeholder="CI" name="CI" id="CI"
+                      required minlength="11" [(ngModel)]="userService.selectedUser.CI" #CI="ngModel">
+                    <app-ayuda *ngIf="CI.invalid && CI.touched" [errors]="CI.errors" [tipocampo]="'numero'"></app-ayuda>
+                    <small *ngIf="CIvalid" style="color: red; margin-left: 2%;">CI incorrecto.</small>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-control-user" placeholder="Nombre de Usuario" name="username"
+                      id="username" required [(ngModel)]="userService.selectedUser.username" #username="ngModel">
+                    <app-ayuda *ngIf="username.invalid && username.touched" [errors]="username.errors"></app-ayuda>
+                  </div>
+                </div>
+                <div *ngIf="!userService.selectedUser._id" class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="password" class="form-control form-control-user" placeholder="Contraseña"
+                      name="secondLastname" id="secondLastname" required minlength="8"
+                      [(ngModel)]="userService.selectedUser.secondLastname" #passwordC="ngModel">
+                    <app-ayuda *ngIf="passwordC.invalid && passwordC.touched" [errors]="passwordC.errors"></app-ayuda>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="password" class="form-control form-control-user" placeholder="Repetir Contraseña"
+                      name="password" id="password" required minlength="8"
+                      [(ngModel)]="userService.selectedUser.password" #password="ngModel">
+                    <app-ayuda *ngIf="password.invalid && password.touched" [errors]="password.errors"></app-ayuda>
+                  </div>
+                  <a *ngIf="badpass" style="color: red; margin-left: 2%;">Las contraseñas no coinciden.</a>
+                </div>
+                <a *ngIf="error" style="color: red;">{{error}}</a>
+
+                <button type="submit" [disabled]="form.invalid" class="btn btn-primary btn-user btn-block">
+                  Registrar Usuario
+                </button>
+
+              </form>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="pt-3 pr-5 pl-5 pb-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Roles</h1>
+              </div>
+            <ul class="list-group">
+              <li *ngFor="let rol of Roles" class="list-group-item list-group-item-action"
+              [class.active]="verifyRol(rol)"
+              (click)="userRol(rol)">
+                {{rol.name}}
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

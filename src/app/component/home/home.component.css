@@ -1,0 +1,36 @@
+.page-item {
+  cursor: pointer;
+}
+
+.carousel-item{
+bottom: 0;
+width: auto;
+height: 100%;
+max-width: 1920px;
+max-height: 360px;
+size: cover;
+}
+
+.card-title{
+  font-size: 20px;
+  margin-top: 0.5%;
+}
+
+
+h5{
+  margin-top: 2%;
+}
+
+input{
+  /* text-size-adjust: 20px; */
+}
+
+.price {
+  float: right;
+  /* margin-left: 20%; */
+}
+
+.direct-chat-contacts{
+  background-color: white;
+  color: black !important;
+}

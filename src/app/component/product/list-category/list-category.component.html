@@ -1,0 +1,104 @@
+<section class="col-lg-12">
+  <!-- Custom tabs (Charts with tabs)-->
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">
+        <i class="fas fa-th-large mr-1"></i>
+        Listado {{helpService.SubCate}}
+      </h4>
+    </div><!-- /.card-header -->
+    <div class="card-body">
+      <div class="tab-content p-0">
+        <!-- Morris chart - Sales -->
+        <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: auto;">
+          <div *ngIf="!helpService.showProducts[0][0]._id">
+            No hay elementos para mostrar.
+          </div>
+          <div class="row" *ngIf="helpService.showProducts[0][0]._id">
+            <section *ngFor="let items of helpService.showProducts" class="col-lg-4 connectedSortable">
+              <div *ngFor="let item of items" class="card direct-chat direct-chat-primary">
+                <div class="card-header">
+                  <h5 class="card-title">{{item.name}}</h5>
+
+                  <div class="card-tools">
+                    <span style='font-size:15px;' class="badge badge-primary"
+                      ngbPopover="Disponible en el Almacén">{{item.storeAvailability}}</span>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Details"
+                      data-widget="chat-pane-toggle" ngbPopover="Detalles">
+                      <i class="fas fa-book"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <!-- BODY here -->
+                  <img [src]="'http://localhost:3000/' + item.picture" width="100%" height="250px" alt="">
+                  <!--/.BODY-->
+
+                  <!-- Second BODY here -->
+                  <div class="direct-chat-contacts p-3">
+                    <h3>Detalles del Producto:</h3>
+                    <p><strong>Descripción:</strong> {{item.description}}</p>
+                    <p><strong>Categoría:</strong> {{item.kind}}</p>
+                    <p><strong>SubCategoría:</strong> {{item.subCategory}}</p>
+                    <p><strong>Peso:</strong> {{item.weigth}}</p>
+                    <!-- /.contacts-list -->
+                  </div>
+                  <!-- /.Second BODY -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <form (submit)="submit(cantidad, item)">
+                    <div class="row">
+                      <div class="col-7">
+                        <h5 *ngIf="!item.promotion > 0"><strong>Precio: ${{item.price}}</strong></h5>
+                        <h5 *ngIf="item.promotion > 0"><strong>Precio:<del> ${{item.price}}</del> <span
+                              data-toggle="tooltip" class="badge badge-danger ml-1">${{item.promotion}}</span></strong>
+                        </h5>
+                      </div>
+                      <div class="input-group col-5 price">
+                        <input type="number" name="cant" placeholder="0" #cantidad style="height: 40px;"
+                          class="form-control">
+                        <span class="input-group-append">
+                          <button type="submit" class="btn btn-primary" style="height: 40px;">Añadir</button>
+                        </span>
+                      </div>
+                      <!-- <button type="button" class="btn btn-primary" style="align-items: right;">Add to Car</button> -->
+                    </div>
+                  </form>
+                </div>
+                <!-- /.card-footer-->
+              </div>
+            </section>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /.card-body -->
+    <div class="card-footer" *ngIf="helpService.showProducts[0][0]._id">
+      <ul class="pagination pagination-md" style="float: right;">
+        <li class="page-item"><a (click)="pagination(1)" class="page-link">&laquo;</a></li>
+        <li *ngIf="helpService.currentPage > 3" class="page-item"><a class="page-link">...</a></li>
+        <li *ngIf="helpService.currentPage > 2" (click)="pagination(helpService.beforepage-1)" class="page-item"><a
+            class="page-link">{{helpService.beforepage-1}}</a></li>
+        <li *ngIf="helpService.currentPage > 1" (click)="pagination(helpService.beforepage)" class="page-item"><a
+            class="page-link">{{helpService.beforepage}}</a></li>
+        <li class="page-item active"><a class="page-link">{{helpService.currentPage}}</a></li>
+
+        <li *ngIf="helpService.currentPage < helpService.pages" (click)="pagination(helpService.nextpage)"
+          class="page-item"><a class="page-link">{{helpService.nextpage}}</a></li>
+        <li *ngIf="helpService.currentPage < helpService.pages-1" (click)="pagination(helpService.nextpage+1)"
+          class="page-item"><a class="page-link">{{helpService.nextpage+1}}</a></li>
+        <li *ngIf="helpService.currentPage < helpService.pages-2" class="page-item"><a class="page-link">...</a></li>
+        <li class="page-item"><a (click)="pagination(helpService.pages)" class="page-link">&raquo;</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.card -->
+
+</section>

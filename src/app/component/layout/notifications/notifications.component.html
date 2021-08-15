@@ -1,0 +1,22 @@
+
+
+    <!-- Then put toasts within -->
+    <div *ngIf="helpService.BoolNotifActive" class="{{helpService.NotifActive}}" role="alert" aria-live="assertive" aria-atomic="true">
+      <!-- <div class="toast-header">
+        <strong class="mr-auto">Bootstrap</strong>
+        <button (click)="close()" type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+      </div> -->
+      <button (click)="close()" type="button" class="ml-2 mb-1 close mr-3 mt-1" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="toast-body p-3">
+        <p>{{helpService.Contenido}}</p>
+      </div>
+    </div>
+
+
+
+

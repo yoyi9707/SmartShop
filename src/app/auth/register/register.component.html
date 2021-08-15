@@ -1,0 +1,80 @@
+<div class="container">
+
+  <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div class="col-lg-5">
+          <img src="../../../assets/img/register.jpg" style="border-bottom-left-radius: 1%; border-top-left-radius: 1%;" width="480px" height="470px" alt="">
+
+        </div>
+        <div class="col-lg-7">
+          <div class="p-5">
+            <div class="text-center">
+              <h1 class="h4 text-gray-900 mb-4">Regístrate!</h1>
+            </div>
+            <form #form="ngForm" (ngSubmit)="Register(form)" class="user">
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text" class="form-control form-control-user" placeholder="Nombre" name="name"
+                    id="name" required [(ngModel)]="authService.logedUser.name" #name="ngModel">
+                  <app-ayuda *ngIf="name.invalid && name.touched" [errors]="name.errors"></app-ayuda>
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control form-control-user" placeholder="Apellidos" name="firstLastname"
+                    id="firstLastname" required [(ngModel)]="authService.logedUser.firstLastname"
+                    #firstLastname="ngModel">
+                  <app-ayuda *ngIf="firstLastname.invalid && firstLastname.touched" [errors]="firstLastname.errors">
+                  </app-ayuda>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control form-control-user" placeholder="Correo" name="email"
+                  id="email" required email [(ngModel)]="authService.logedUser.email" #email="ngModel">
+                <app-ayuda *ngIf="email.invalid && email.touched" [errors]="email.errors" [tipocampo]="'email'">
+                </app-ayuda>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="number" class="form-control form-control-user" placeholder="CI" name="CI" id="CI"
+                    required minlength="11" [(ngModel)]="authService.logedUser.CI" #CI="ngModel">
+                  <app-ayuda *ngIf="CI.invalid && CI.touched" [errors]="CI.errors" [tipocampo]="'numero'"></app-ayuda>
+                  <small *ngIf="CIvalid" style="color: red; margin-left: 2%;">CI incorrecto.</small>
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control form-control-user" placeholder="Usuario" name="username"
+                    id="username" required [(ngModel)]="authService.logedUser.username" #username="ngModel">
+                  <app-ayuda *ngIf="username.invalid && username.touched" [errors]="username.errors"></app-ayuda>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="password" class="form-control form-control-user" placeholder="Contraseña"
+                    name="secondLastname" id="secondLastname" required minlength="8"
+                    [(ngModel)]="authService.logedUser.secondLastname" #passwordC="ngModel">
+                  <app-ayuda *ngIf="passwordC.invalid && passwordC.touched" [errors]="passwordC.errors"></app-ayuda>
+                </div>
+                <div class="col-sm-6">
+                  <input type="password" class="form-control form-control-user" placeholder="Repetir Contraseña"
+                    name="password" id="password" required minlength="8" [(ngModel)]="authService.logedUser.password"
+                    #password="ngModel">
+                  <app-ayuda *ngIf="password.invalid && password.touched" [errors]="password.errors"></app-ayuda>
+                </div>
+                <a *ngIf="badpass" style="color: red; margin-left: 2%;">Las contraseñas no coinciden.</a>
+              </div>
+              <a *ngIf="error" style="color: red;">{{error}}</a>
+              <button type="submit" [disabled]="form.invalid" class="btn btn-primary btn-user btn-block">
+                Registrar usuario
+              </button>
+              <hr>
+            </form>
+            <div class="text-center">
+              <a class="small" [routerLink]="['/auth','login']">Ya tienes un usuario? Iniciar!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

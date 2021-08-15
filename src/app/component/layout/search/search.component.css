@@ -1,0 +1,7 @@
+.page-item {
+  cursor: pointer;
+}
+.direct-chat-contacts{
+  background-color: white;
+  color: black !important;
+}

@@ -1,0 +1,20 @@
+
+<!-- MENSAJE DE ERROR FORMS -->
+<div *ngIf="errors.required">
+  <small style="color: red;">Este campo es requerido.</small>
+  <small *ngIf="errors.required && tipocampo =='numero'" style="color: red;"> Debe ser numérico.</small>
+  <small *ngIf="errors.required && tipocampo =='email'" style="color: red;"> Debe ser un email.</small>
+</div>
+
+<div *ngIf="errors.email">
+  <small style="color: red;">Email incorrecto.</small>
+</div>
+
+<div *ngIf="errors.minlength">
+  <small style="color: red;">Este campo debe tener al menos {{errors.minlength.requiredLength}} caracteres.</small>
+</div>
+
+<div *ngIf="errors.maxlength">
+  <small style="color: red;">Este campo debe tener menos de {{errors.maxlength.requiredLength}} caracteres.</small>
+</div>
+

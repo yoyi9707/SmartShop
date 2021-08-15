@@ -1,0 +1,79 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"><i class="fas fa-stream mr-1"></i>Listado de Nomencladores</h3>
+    <button class="btn btn-primary" style="float: right;" [routerLink]="['/nomenclator/create']"><i class="nav-icon fas fa-plus mr-1"></i>Nuevo Nomenclador</button>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <div *ngIf="nomenclators.length < 1">
+      No hay elementos que mostrar.
+    </div>
+    <table id="example1" class="table table-bordered table-striped" *ngIf="nomenclators.length > 0">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Acrónimo</th>
+          <th>Descripción</th>
+          <th>Padre</th>
+          <th>Orden</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of nomenclators">
+          <td>{{item.name}}</td>
+          <td>{{item.acronym}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.fathername}}</td>
+          <td>{{item.order}}</td>
+          <td>
+            <span *ngIf="item.active" data-toggle="tooltip" style='font-size:15px; cursor: pointer;'
+              title="Nomenclador disponible" (click)="checkbox.click(); desactivarNom(item)" class="badge badge-primary">Activo</span>
+            <span *ngIf="!item.active" data-toggle="tooltip" style='font-size:15px; cursor: pointer;'
+              title="Nomenclador no disponible" (click)="checkbox.click(); activarNom(item)" class="badge badge-danger">Inactivo</span>
+            <input class="checkbox d-none" #checkbox type="checkbox" [(ngModel)]=item.active>
+            <i class="far fa-edit" style='font-size:18px; cursor: pointer; margin-left: 5%; margin-right: 5%;' (click)="edit(item)"></i>
+            <!-- <i class="far fa-trash-alt" style='font-size:18px; cursor: pointer;' (click)="deleteNom(item._id)"></i> -->
+            <a [ngbPopover]=imagen  popoverTitle="Alerta!"><i class="far fa-trash-alt" style='font-size:18px; cursor: pointer;'></i></a>
+            <ng-template #imagen>
+             <p style="text-align: center;">Estás seguro de eliminar el elemento?</p>
+             <button class="btn btn-danger mr-3 ml-3" (click)="deleteNom(item._id)">Eliminar</button>
+             <button class="btn btn-dark">Cancelar</button>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Nombre</th>
+          <th>Acrónimo</th>
+          <th>Descripción</th>
+          <th>Padre</th>
+          <th>Orden</th>
+          <th>Acciones</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="card-footer" *ngIf="nomenclators.length > 0">
+
+    <ul class="pagination pagination-md" style="float: right;">
+      <li class="page-item"><a (click)="getNomenclators(1)" class="page-link">&laquo;</a></li>
+      <li *ngIf="currentPage > 3" class="page-item"><a class="page-link">...</a></li>
+      <li *ngIf="currentPage > 2" (click)="getNomenclators(beforepage-1)" class="page-item"><a
+          class="page-link">{{beforepage-1}}</a></li>
+      <li *ngIf="currentPage > 1" (click)="getNomenclators(beforepage)" class="page-item"><a
+          class="page-link">{{beforepage}}</a></li>
+      <li class="page-item active"><a class="page-link">{{currentPage}}</a></li>
+
+      <li *ngIf="currentPage < pages" (click)="getNomenclators(nextpage)" class="page-item"><a
+          class="page-link">{{nextpage}}</a></li>
+      <li *ngIf="currentPage < pages-1" (click)="getNomenclators(nextpage+1)" class="page-item"><a
+          class="page-link">{{nextpage+1}}</a></li>
+      <li *ngIf="currentPage < pages-2" class="page-item"><a class="page-link">...</a></li>
+      <li class="page-item"><a (click)="getNomenclators(pages)" class="page-link">&raquo;</a></li>
+    </ul>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->

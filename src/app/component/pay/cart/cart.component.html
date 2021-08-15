@@ -1,0 +1,285 @@
+<div class="row">
+  <section class="col-lg-8 connectedSortable">
+    <!-- Custom tabs (Charts with tabs)-->
+    <div class="card">
+      <div class="card-body">
+        <div class="tab-content p-0">
+          <div class="chart tab-pane active" id="revenue-chart1" style="position: relative; height: auto;">
+            <div class="row">
+              <h3><strong><i class="fas fa-shopping-basket mr-2"
+                    style="font-size: 35px;"></i>Cesta({{productService.totalCarProducts}})</strong></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.card -->
+
+    <!-- Productos -->
+    <div *ngFor="let product of productService.CarProducts" class="card p-4">
+      <div class="row">
+        <div class="col-4">
+          <img [src]="'http://localhost:3000/' + product[0].picture" width="200px" height="200px" alt="">
+        </div>
+        <div class="col-4">
+          <p style="font-size: 20px;"><strong>{{product[0].name}}</strong></p>
+          <p>Peso: {{product[0].weigth}}</p>
+          <p>Categoría: {{product[0].kind}}</p>
+          <p>SubCategoría: {{product[0].subCategory}}</p>
+          <p>Cantidad disponible: {{product[0].storeAvailability - product[1]}}</p>
+          <p>Cantidad a comprar: {{product[1]}}</p>
+          <div *ngIf="!(product[0].promotion > 0)" style="font-size: 20px;"><strong>Precio:
+              ${{product[0].price}}</strong></div>
+          <div *ngIf="product[0].promotion > 0" style="font-size: 20px;"><strong>Precio:
+              <del>${{product[0].price}}</del> <span data-toggle="tooltip"
+                class="badge badge-danger ml-1">${{product[0].promotion}}</span></strong></div>
+        </div>
+        <div class="col-4">
+          <div class="row m-5">
+            <div class="input-group mb-3">
+              <span class="input-group-append">
+                <button class="btn btn-danger" (click)="down(product[0])"
+                  style="cursor: pointer; width: 38px; height: 38px; border-top-left-radius: 10%; border-bottom-left-radius: 10%;"><i
+                    class="fas fa-arrow-down"></i></button>
+              </span>
+              <input class="form-control col-4" style="border-radius: 0%;" disabled placeholder={{product[1]}}>
+              <span class="input-group-append">
+                <button class="btn btn-danger" (click)="up(product[0])"
+                  style="cursor: pointer; width: 38px; height: 38px;"><i class="fas fa-arrow-up"></i></button>
+              </span>
+            </div>
+          </div>
+          <button class="btn btn-danger" style="float: right;" (click)="deleteProductCart(product[0])">Eliminar
+            producto
+            de la cesta</button>
+        </div>
+
+      </div>
+    </div>
+    <!--/.Productos -->
+
+    <!-- Métodos de pago -->
+    <div class="card p-4">
+      <div class="row">
+        <div class="col-6">
+          <h5 style="margin-left: 20%;"><strong>Métodos de pago</strong></h5>
+          <img src="../../../../assets/img/tarjetas.jpg" style="max-width: 300px; max-height: 100px; margin-left: 5%;"
+            alt="">
+        </div>
+        <div class="col-6">
+          <h5 style="margin-left: 15%;"><strong><i class="fas fa-shield-alt mr-1"></i>Protección del comprador</strong>
+          </h5>
+          <p class="m-3">Recibe un reembolso de tu dinero si el artículo no llega o es diferente al de la descripción.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- /.Métodos de pago -->
+
+
+    <!-- CARROUSEL -->
+    <div class="card" style="height: 300px;">
+      <div id="demo" class="carousel slide p-4" data-ride="carousel">
+        <h3>Quizás te interese:</h3>
+        <!-- The slideshow -->
+        <div class="carousel-inner mt-2" style="height: 280px; margin-left: 2%; width: 96%;">
+          <div class="carousel-item active">
+            <div class="row">
+              <div class="col-4">
+                <div style="margin-left: 10%;">
+                  <div *ngIf="products[0].name" style="margin-left: 5%;"><strong>{{products[0].name}}</strong></div>
+                  <img *ngIf="products[0].picture" [src]="'http://localhost:3000/' + products[0].picture" width="200px"
+                    height="150px" alt="" style="cursor: pointer;"
+                    (click)="showProductBySubCat(products[0].subCategory)">
+                  <div *ngIf="!(products[0].promotion > 0)" style="margin-left: 5%;"> Precio: ${{products[0].price}}
+                  </div>
+                  <div *ngIf="products[0].promotion > 0" style="margin-left: 5%;"> Precio:
+                    <del>${{products[0].price}}</del> <span data-toggle="tooltip"
+                      class="badge badge-danger ml-1">${{products[0].promotion}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div style="margin-left: 10%;">
+                  <div *ngIf="products[1]" style="margin-left: 5%;"><strong>{{products[1].name}}</strong></div>
+                  <img *ngIf="products[1]" [src]="'http://localhost:3000/' + products[1].picture" width="200px"
+                    height="150px" alt="" style="cursor: pointer;"
+                    (click)="showProductBySubCat(products[1].subCategory)">
+                  <div *ngIf="products[1]">
+                    <div *ngIf="!(products[1].promotion > 0)" style="margin-left: 5%;"> Precio: {{products[1].price}}
+                    </div>
+                    <div *ngIf="products[1].promotion > 0" style="margin-left: 5%;"> Precio:
+                      <del>{{products[1].price}}</del> <span data-toggle="tooltip"
+                        class="badge badge-danger ml-1">${{products[1].promotion}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div style="margin-left: 10%;">
+                  <div *ngIf="products[2]" style="margin-left: 5%;"><strong>{{products[2].name}}</strong></div>
+                  <img *ngIf="products[2]" [src]="'http://localhost:3000/' + products[2].picture" width="200px"
+                    height="150px" alt="" style="cursor: pointer;"
+                    (click)="showProductBySubCat(products[2].subCategory)">
+                  <div *ngIf="products[2]">
+                    <div *ngIf="!(products[2].promotion > 0)" style="margin-left: 5%;"> Precio: {{products[2].price}}
+                    </div>
+                    <div *ngIf="products[2].promotion > 0" style="margin-left: 5%;"> Precio:
+                      <del>{{products[2].price}}</del> <span data-toggle="tooltip"
+                        class="badge badge-danger ml-1">${{products[2].promotion}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row">
+              <div class="col-4">
+                <div style="margin-left: 10%;">
+                  <div *ngIf="products[3]" style="margin-left: 5%;"><strong>{{products[3].name}}</strong></div>
+                  <img *ngIf="products[3]" [src]="'http://localhost:3000/' + products[3].picture" width="200px"
+                    height="150px" alt="" style="cursor: pointer;"
+                    (click)="showProductBySubCat(products[3].subCategory)">
+                  <div *ngIf="products[3]">
+                    <div *ngIf="!(products[3].promotion > 0)" style="margin-left: 5%;"> Precio: {{products[3].price}}
+                    </div>
+                    <div *ngIf="products[3].promotion > 0" style="margin-left: 5%;"> Precio:
+                      <del>{{products[3].price}}</del> <span data-toggle="tooltip"
+                        class="badge badge-danger ml-1">${{products[3].promotion}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div style="margin-left: 10%;">
+                  <div *ngIf="products[4]" style="margin-left: 5%;"><strong>{{products[4].name}}</strong></div>
+                  <img *ngIf="products[4]" [src]="'http://localhost:3000/' + products[4].picture" width="200px"
+                    height="150px" alt="" style="cursor: pointer;"
+                    (click)="showProductBySubCat(products[4].subCategory)">
+                  <div *ngIf="products[4]">
+                    <div *ngIf="!(products[4].promotion > 0)" style="margin-left: 5%;"> Precio: {{products[4].price}}
+                    </div>
+                    <div *ngIf="products[4].promotion > 0" style="margin-left: 5%;"> Precio:
+                      <del>{{products[4].price}}</del> <span data-toggle="tooltip"
+                        class="badge badge-danger ml-1">${{products[4].promotion}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div style="margin-left: 10%;">
+                  <div *ngIf="products[5]" style="margin-left: 5%;"><strong>{{products[5].name}}</strong></div>
+                  <img *ngIf="products[5]" [src]="'http://localhost:3000/' + products[5].picture" width="200px"
+                    height="150px" alt="" style="cursor: pointer;"
+                    (click)="showProductBySubCat(products[5].subCategory)">
+                  <div *ngIf="products[5]">
+                    <div *ngIf="!(products[5].promotion > 0)" style="margin-left: 5%;"> Precio: {{products[5].price}}
+                    </div>
+                    <div *ngIf="products[5].promotion > 0" style="margin-left: 5%;"> Precio:
+                      <del>{{products[5].price}}</del> <span data-toggle="tooltip"
+                        class="badge badge-danger ml-1">${{products[5].promotion}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row">
+              <div class="col-4">
+                <div style="margin-left: 10%;">
+                  <div *ngIf="products[6]" style="margin-left: 5%;"><strong>{{products[6].name}}</strong></div>
+                  <img *ngIf="products[6]" [src]="'http://localhost:3000/' + products[6].picture" width="200px"
+                    height="150px" alt="" style="cursor: pointer;"
+                    (click)="showProductBySubCat(products[6].subCategory)">
+                  <div *ngIf="products[6]">
+                    <div *ngIf="!(products[6].promotion > 0)" style="margin-left: 5%;"> Precio: {{products[6].price}}
+                    </div>
+                    <div *ngIf="products[6].promotion > 0" style="margin-left: 5%;"> Precio:
+                      <del>{{products[6].price}}</del> <span data-toggle="tooltip"
+                        class="badge badge-danger ml-1">${{products[6].promotion}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div style="margin-left: 10%;">
+                  <div *ngIf="products[7]" style="margin-left: 5%;"><strong>{{products[7].name}}</strong></div>
+                  <img *ngIf="products[7]" [src]="'http://localhost:3000/' + products[7].picture" width="200px"
+                    height="150px" alt="" style="cursor: pointer;"
+                    (click)="showProductBySubCat(products[7].subCategory)">
+                  <div *ngIf="products[7]">
+                    <div *ngIf="!(products[7].promotion > 0)" style="margin-left: 5%;"> Precio: {{products[7].price}}
+                    </div>
+                    <div *ngIf="products[7].promotion > 0" style="margin-left: 5%;"> Precio:
+                      <del>{{products[7].price}}</del> <span data-toggle="tooltip"
+                        class="badge badge-danger ml-1">${{products[7].promotion}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div style="margin-left: 10%;">
+                  <div *ngIf="products[8]" style="margin-left: 5%;"><strong>{{products[8].name}}</strong></div>
+                  <img *ngIf="products[8]" [src]="'http://localhost:3000/' + products[8].picture" width="200px"
+                    height="150px" alt="" style="cursor: pointer;"
+                    (click)="showProductBySubCat(products[8].subCategory)">
+                  <div *ngIf="products[8]">
+                    <div *ngIf="!(products[8].promotion > 0)" style="margin-left: 5%;"> Precio: {{products[8].price}}
+                    </div>
+                    <div *ngIf="products[8].promotion > 0" style="margin-left: 5%;"> Precio:
+                      <del>{{products[8].price}}</del> <span data-toggle="tooltip"
+                        class="badge badge-danger ml-1">${{products[8].promotion}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left and right controls -->
+      <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+      <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </a>
+
+    </div>
+    <!--  -->
+
+  </section>
+
+  <section class="col-lg-4 connectedSortable">
+    <div class="card p-4">
+      <h3><strong>Resumen del pedido</strong></h3>
+      <div style="margin-top: 4;">
+        <p *ngIf="productService.totalRopa > 0" style="margin: 0;"><strong>Artículos de
+            Ropa({{productService.totalRopa}})</strong></p>
+        <P *ngIf="productService.totalRopa > 0" style="margin-bottom: 2;">SubTotal<span
+            style="float: right;">${{productService.precioRopa}}</span></P>
+        <p *ngIf="productService.totalMueble > 0" style="margin: 0;"><strong>Artículos de
+            Mueble({{productService.totalMueble}})</strong></p>
+        <P *ngIf="productService.totalMueble > 0" style="margin-bottom: 2;">SubTotal<span
+            style="float: right;">${{productService.precioMueble}}</span></P>
+        <p *ngIf="productService.totalTecnologia > 0" style="margin: 0;"><strong>Artículos de
+            Tecnología({{productService.totalTecnologia}})</strong></p>
+        <P *ngIf="productService.totalTecnologia > 0" style="margin-bottom: 2;">SubTotal<span
+            style="float: right;">${{productService.precioTecnologia}}</span></P>
+        <p *ngIf="productService.totalComida > 0" style="margin: 0;"><strong>Artículos de
+            Comida({{productService.totalComida}})</strong></p>
+        <P *ngIf="productService.totalComida > 0" style="margin: 0;">SubTotal<span
+            style="float: right;">${{productService.precioComida}}</span></P>
+      </div>
+      <hr>
+      <strong style="margin-top: 2;">Total<span
+          style="float: right; font-size: 25px;">${{productService.precioTotCarProducts}}</span></strong>
+
+      <button (click)="buy()"
+        class="btn btn-danger btn-block">COMPRAR({{productService.totalCarProducts}})</button>
+    </div>
+  </section>
+</div>

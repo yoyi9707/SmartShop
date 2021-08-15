@@ -1,0 +1,11 @@
+.toast{
+  position: fixed;
+  top: 70px;
+  right: 0;
+  float: right;
+  margin-left: 72%;
+}
+
+p{
+  font-size: 18px;
+}
