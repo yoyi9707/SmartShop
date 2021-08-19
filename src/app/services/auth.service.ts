@@ -12,7 +12,7 @@ export class AuthService {
 
   logedUser: User;
   roles: Role[];
-  readonly URL = 'http://167.172.134.249:3000/api/auth';
+  readonly URL = 'http://167.172.134.249/api/auth';
   code: string;
   selectedUsertoRecovery: User;
   usernameRecovery: string;
