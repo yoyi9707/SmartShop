@@ -10,7 +10,7 @@ export class NomenclatorService {
   selectedNomenclator: Nomenclator;
   Nomenclators: Nomenclator[];
 
-  readonly URL = 'http://localhost:3000/api/nomenclator';
+  readonly URL = 'http://167.172.134.249/api/nomenclator';
 
   constructor(private http: HttpClient) {
     this.selectedNomenclator = new Nomenclator();
